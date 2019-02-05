@@ -12,8 +12,8 @@ class Heap {
         this.storage.push(value);
         var valueIndex = this.storage.length - 1;
         var parentIndex = Math.floor(this.storage.length / 2);
-        console.log(compareFunction(this.storage[valueIndex], this.storage[parentIndex]))
-        while (compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
+        console.log(this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]))
+        while (this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
             this.storage[valueIndex] = this.storage[parentIndex];
             this.storage[parentIndex] = value;
             valueIndex = parentIndex;
@@ -34,8 +34,8 @@ class Heap {
         var childIndex1 = 1;
         var childIndex2 = 2;
         var swapIndex, temp;
-        while ((compareFunction(this.storage[childIndex1], this.storage[changeIndex]) > 0) || (compareFunction(this.storage[childIndex2], this.storage[changeIndex]) > 0)) {
-            if ((compareFunction(this.storage[childIndex1], this.storage[childIndex2]) > 0)  || !this.storage[childIndex2]) {
+        while ((this.compareFunction(this.storage[childIndex1], this.storage[changeIndex]) > 0) || (this.compareFunction(this.storage[childIndex2], this.storage[changeIndex]) > 0)) {
+            if ((this.compareFunction(this.storage[childIndex1], this.storage[childIndex2]) > 0)  || !this.storage[childIndex2]) {
                 swapIndex = childIndex1;
             } else {
                 swapIndex = childIndex2;
@@ -51,19 +51,16 @@ class Heap {
     }
 }
 
-// var compareFunction = compareFunction || function(a, b) {return b - a};
+var testHeap = new Heap(function(a, b) {return b - a});
 
+for (var i = 0; i < 10; i++) {
+    testHeap.insert(Math.floor(Math.random() * 999))
+}
 
-// var testHeap = new Heap();
+console.log(testHeap.storage)
 
-// for (var i = 0; i < 50; i++) {
-//     testHeap.insert(Math.floor(Math.random() * 999))
-// }
-
-// console.log(testHeap.storage)
-
-// for (var i = 0; i < 51; i++) {
-//     console.log(testHeap.remove())
-//     console.log(testHeap.storage)
-// }
+for (var i = 0; i < 10; i++) {
+    console.log(testHeap.remove())
+    console.log(testHeap.storage)
+}
 

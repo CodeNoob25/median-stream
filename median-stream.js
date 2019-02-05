@@ -1,6 +1,6 @@
 class MedianStream {
     constructor() {
-        this.lowHeap = new Heap(function(a, b) {return b - a});
+        this.lowHeap = new Heap(function(a, b) {return a - b});
         this.highHeap = new Heap();
         this.median = null;
     }
@@ -14,13 +14,13 @@ class MedianStream {
         }
         if (value <= this.median) {
             this.lowHeap.insert(value);
-            if (this.lowHeap.size - this.highHeap.size === 2) {
+            if (this.lowHeap.size() - this.highHeap.size() === 2) {
                 this.highHeap.insert(this.lowHeap.remove());
             }
         } else {
             this.highHeap.insert(value);
-            if (this.lowHeap.size - this.highHeap.size === 1) {
-                this.highHeap.insert(this.lowHeap.remove());
+            if (this.highHeap.size() - this.lowHeap.size()  === 1) {
+                this.lowHeap.insert(this.highHeap.remove());
             }
         }
         if (this.size() % 2 === 0) {
@@ -35,17 +35,15 @@ class MedianStream {
       }
   
       size() {
-        return this.lowHeap.size + this.highHeap.size;
+        return this.lowHeap.size() + this.highHeap.size();
       }
     
   }
   
 
-
-
   class Heap {
     constructor(compareFunction) {
-        this.compareFunction = compareFunction || function(a, b) {return a - b};
+        this.compareFunction = compareFunction || function(a, b) {return b - a};
         this.storage = [];
     }
 
@@ -53,12 +51,11 @@ class MedianStream {
         return this.storage[0];
     }
 
-    push(value) {
+    insert(value) {
         this.storage.push(value);
         var valueIndex = this.storage.length - 1;
         var parentIndex = Math.floor(this.storage.length / 2);
-        console.log(compareFunction(this.storage[valueIndex], this.storage[parentIndex]))
-        while (compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
+        while (this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
             this.storage[valueIndex] = this.storage[parentIndex];
             this.storage[parentIndex] = value;
             valueIndex = parentIndex;
@@ -66,7 +63,7 @@ class MedianStream {
         }
     }
 
-    pop() {
+    remove() {
         var removed = this.storage[0];
 
         this.storage[0] = this.storage[this.storage.length - 1];
@@ -79,8 +76,8 @@ class MedianStream {
         var childIndex1 = 1;
         var childIndex2 = 2;
         var swapIndex, temp;
-        while ((compareFunction(this.storage[childIndex1], this.storage[changeIndex]) > 0) || (compareFunction(this.storage[childIndex2], this.storage[changeIndex]) > 0)) {
-            if ((compareFunction(this.storage[childIndex1], this.storage[childIndex2]) > 0)  || !this.storage[childIndex2]) {
+        while ((this.compareFunction(this.storage[childIndex1], this.storage[changeIndex]) > 0) || (this.compareFunction(this.storage[childIndex2], this.storage[changeIndex]) > 0)) {
+            if ((this.compareFunction(this.storage[childIndex1], this.storage[childIndex2]) > 0)  || !this.storage[childIndex2]) {
                 swapIndex = childIndex1;
             } else {
                 swapIndex = childIndex2;
@@ -98,3 +95,15 @@ class MedianStream {
         return this.storage.length;
     }
 }
+
+var testStream = new MedianStream();
+
+for (var i = 0; i < 7; i++) {
+    var newNum = Math.floor(Math.random() * 999);
+    testStream.insert(newNum)
+    console.log(newNum)
+    console.log(testStream.lowHeap.storage)
+    console.log( testStream.highHeap.storage)
+    console.log(testStream.peekMedian())
+}
+
