@@ -8,7 +8,7 @@ class Heap {
         return this.storage[0];
     }
 
-    push(value) {
+    insert(value) {
         this.storage.push(value);
         var valueIndex = this.storage.length - 1;
         var parentIndex = Math.floor(this.storage.length / 2);
@@ -21,7 +21,7 @@ class Heap {
         }
     }
 
-    pop() {
+    remove() {
         var removed = this.storage[0];
 
         this.storage[0] = this.storage[this.storage.length - 1];
@@ -51,19 +51,19 @@ class Heap {
     }
 }
 
-var compareFunction = compareFunction || function(a, b) {return b - a};
+// var compareFunction = compareFunction || function(a, b) {return b - a};
 
 
-var testHeap = new Heap();
+// var testHeap = new Heap();
 
-for (var i = 0; i < 50; i++) {
-    testHeap.push(Math.floor(Math.random() * 999))
-}
+// for (var i = 0; i < 50; i++) {
+//     testHeap.insert(Math.floor(Math.random() * 999))
+// }
 
-console.log(testHeap.storage)
+// console.log(testHeap.storage)
 
-for (var i = 0; i < 51; i++) {
-    console.log(testHeap.pop())
-    console.log(testHeap.storage)
-}
+// for (var i = 0; i < 51; i++) {
+//     console.log(testHeap.remove())
+//     console.log(testHeap.storage)
+// }
 
