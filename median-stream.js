@@ -19,7 +19,7 @@ class MedianStream {
             }
         } else {
             this.highHeap.insert(value);
-            if (this.highHeap.size() - this.lowHeap.size()  === 1) {
+            if (this.highHeap.size() - this.lowHeap.size() === 1) {
                 this.lowHeap.insert(this.highHeap.remove());
             }
         }
@@ -54,7 +54,7 @@ class MedianStream {
     insert(value) {
         this.storage.push(value);
         var valueIndex = this.storage.length - 1;
-        var parentIndex = Math.floor(this.storage.length / 2);
+        var parentIndex = Math.floor((this.storage.length - 1) / 2);
         while (this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
             this.storage[valueIndex] = this.storage[parentIndex];
             this.storage[parentIndex] = value;
@@ -98,12 +98,11 @@ class MedianStream {
 
 var testStream = new MedianStream();
 
-for (var i = 0; i < 7; i++) {
+for (var i = 0; i < 10; i++) {
     var newNum = Math.floor(Math.random() * 999);
     testStream.insert(newNum)
     console.log(newNum)
     console.log(testStream.lowHeap.storage)
-    console.log( testStream.highHeap.storage)
+    console.log(testStream.highHeap.storage)
     console.log(testStream.peekMedian())
 }
-

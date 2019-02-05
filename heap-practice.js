@@ -11,7 +11,7 @@ class Heap {
     insert(value) {
         this.storage.push(value);
         var valueIndex = this.storage.length - 1;
-        var parentIndex = Math.floor(this.storage.length / 2);
+        var parentIndex = Math.floor((this.storage.length - 1) / 2);
         console.log(this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]))
         while (this.compareFunction(this.storage[valueIndex], this.storage[parentIndex]) > 0) {
             this.storage[valueIndex] = this.storage[parentIndex];
@@ -51,16 +51,15 @@ class Heap {
     }
 }
 
-var testHeap = new Heap(function(a, b) {return b - a});
+// var testHeap = new Heap();
 
-for (var i = 0; i < 10; i++) {
-    testHeap.insert(Math.floor(Math.random() * 999))
-}
+// for (var i = 0; i < 10; i++) {
+//     testHeap.insert(Math.floor(Math.random() * 999))
+// }
 
-console.log(testHeap.storage)
+// console.log(testHeap.storage)
 
-for (var i = 0; i < 10; i++) {
-    console.log(testHeap.remove())
-    console.log(testHeap.storage)
-}
-
+// for (var i = 0; i < 10; i++) {
+//     console.log(testHeap.remove())
+//     console.log(testHeap.storage)
+// }
