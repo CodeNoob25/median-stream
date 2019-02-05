@@ -27,7 +27,8 @@ class Heap {
         this.storage[0] = this.storage[this.storage.length - 1];
         this.storage.pop();
         if (this.storage.length < 1) {
-            return null;
+            removed = removed || null;
+            return removed;
         }
         var changeIndex = 0;
         var childIndex1 = 1;
@@ -61,8 +62,8 @@ for (var i = 0; i < 50; i++) {
 
 console.log(testHeap.storage)
 
-for (var i = 0; i < 50; i++) {
-    testHeap.pop()
+for (var i = 0; i < 51; i++) {
+    console.log(testHeap.pop())
     console.log(testHeap.storage)
 }
 
