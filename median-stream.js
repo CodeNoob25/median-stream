@@ -96,13 +96,57 @@ class MedianStream {
     }
 }
 
-var testStream = new MedianStream();
+// var testStream = new MedianStream();
+
+// for (var i = 0; i < 10; i++) {
+//     var newNum = Math.floor(Math.random() * 999);
+//     testStream.insert(newNum)
+//     console.log(newNum)
+//     console.log(testStream.lowHeap.storage)
+//     console.log(testStream.highHeap.storage)
+//     console.log(testStream.peekMedian())
+// }
+
+// version optimized for simplicity
+
+class SimpleMedianStream {
+    constructor() {
+        this.storage = [];
+        this.median = null;
+    }
+
+    insert(value) {
+        for (var i = this.storage.length; i >= 0; i--) {
+            if (value < this.storage[i]) {
+                this.storage.splice(value, i);
+                break;
+            }
+        }
+        var size = this.storage.length;
+        if (size % 2 === 0) {
+            this.median = (this.storage[Math.floor(size)] + this.storage[Math.ceil(size)]) / 2;
+        } else {
+            this.median = this.storage[Math.floor(size)];
+        }
+    }
+
+    peekMedian() {
+        return this.median;
+    }
+
+    size() {
+        return this.storage.length;
+    }
+
+}
+
+var testStream = new SimpleMedianStream();
 
 for (var i = 0; i < 10; i++) {
     var newNum = Math.floor(Math.random() * 999);
-    testStream.insert(newNum)
+    testStream.insert(i)
     console.log(newNum)
-    console.log(testStream.lowHeap.storage)
-    console.log(testStream.highHeap.storage)
+    console.log(testStream.storage)
+    console.log(testStream.storage)
     console.log(testStream.peekMedian())
 }
